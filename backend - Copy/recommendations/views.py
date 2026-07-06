@@ -1,59 +1,23 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from knowledge_gaps.models import KnowledgeGap
+from .models import LearningResource
+from .serializers import LearningResourceSerializer
+from .services import get_recommendations
 
-# Create your views here.
-from rest_framework.views import (
-    APIView
-)
+class RecommendationView(APIView):
+    permission_classes = [IsAuthenticated]
 
-from rest_framework.response import (
-    Response
-)
-
-from knowledge_gaps.models import (
-    KnowledgeGap
-)
-
-from .serializers import (
-    LearningResourceSerializer
-)
-
-from .services import (
-    get_recommendations
-)
-
-class RecommendationView(
-    APIView
-):
-
-    def get(
-        self,
-        request,
-        student_id
-    ):
-
-        gaps = (
-            KnowledgeGap.objects.filter(
-                student_id=student_id
-            )
-        )
-
+    def get(self, request, student_id):
+        gaps = KnowledgeGap.objects.filter(student_id=student_id)
         result = []
-
         for gap in gaps:
-
-            resources = (
-                get_recommendations(gap)
-            )
-
+            resources = get_recommendations(gap)
             result.append({
-                "topic":
-                gap.knowledge_area.name,
-
-                "resources":
-                LearningResourceSerializer(
-                    resources,
-                    many=True
-                ).data
+                "gap_id": gap.id,
+                "topic": gap.knowledge_area.name,
+                "gap_status": gap.status,
+                "resources": LearningResourceSerializer(resources, many=True).data
             })
-
         return Response(result)

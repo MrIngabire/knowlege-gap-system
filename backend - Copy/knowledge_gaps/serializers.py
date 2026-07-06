@@ -1,19 +1,24 @@
 from rest_framework import serializers
-
 from .models import KnowledgeGap
+from assessments.models import Question
 
-
-class KnowledgeGapSerializer(
-    serializers.ModelSerializer
-):
-
-    topic_name = serializers.CharField(
-        source="knowledge_area.name",
-        read_only=True
-    )
+class GapQuizQuestionSerializer(serializers.ModelSerializer):
+    options = serializers.SerializerMethodField()
 
     class Meta:
+        model = Question
+        fields = ['id', 'question_text', 'options']
 
-        model = KnowledgeGap
+    def get_options(self, obj):
+        return {
+            'A': obj.option_a,
+            'B': obj.option_b,
+            'C': obj.option_c,
+            'D': obj.option_d,
+        }
 
-        fields = "__all__"
+class GapQuizSubmitSerializer(serializers.Serializer):
+    gap_id = serializers.IntegerField()
+    answers = serializers.ListField(
+        child=serializers.DictField()
+    )

@@ -1,37 +1,11 @@
-from rest_framework.permissions import (
-    BasePermission
-)
+from rest_framework.permissions import BasePermission
 
 
-class IsLecturer(
-    BasePermission
-):
+class IsLecturer(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.role == "lecturer"
 
-    def has_permission(
-        self,
-        request,
-        view
-    ):
 
-        return (
-            request.user.role
-            ==
-            "lecturer"
-        )
-    
-class IsStudent(
-    BasePermission
-):
-
-    def has_permission(
-        self,
-        request,
-        view
-    ):
-
-        return (
-            request.user.role
-            ==
-            "student"
-        )
-    
+class IsStudent(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.role == "student"

@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     StudentDashboardView,
     LecturerDashboardView,
-    AttemptHistoryView,  # Add this import
+    AttemptHistoryView,
+    StudentAnalyticsView,
 )
 
 urlpatterns = [
@@ -16,10 +17,14 @@ urlpatterns = [
         LecturerDashboardView.as_view(),
         name="lecturer-dashboard"
     ),
-    # ADD THIS - Attempt History endpoint
     path(
         "attempts/<int:student_id>/",
         AttemptHistoryView.as_view(),
         name="attempt-history"
+    ),
+    path(
+        "analytics/",
+        StudentAnalyticsView.as_view(),
+        name="student-analytics"
     ),
 ]

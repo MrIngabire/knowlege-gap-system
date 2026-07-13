@@ -97,7 +97,7 @@ npm run dev
 
 ## 👥 Contributors
 
-* **[Your Name/Author]** - Developer
+* **[Allen assisted by Mr INGABIRE]** - Developers
 
 ## 📜 License
 

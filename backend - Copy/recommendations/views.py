@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets  # Add this import
 from knowledge_gaps.models import KnowledgeGap
 from .models import LearningResource
 from .serializers import LearningResourceSerializer
@@ -21,3 +22,12 @@ class RecommendationView(APIView):
                 "resources": LearningResourceSerializer(resources, many=True).data
             })
         return Response(result)
+
+# ADD THIS NEW CLASS
+class LearningResourceViewSet(viewsets.ModelViewSet):
+    """
+    Handles GET, POST, PUT, DELETE for Learning Resources.
+    """
+    queryset = LearningResource.objects.all()
+    serializer_class = LearningResourceSerializer
+    permission_classes = [IsAuthenticated]

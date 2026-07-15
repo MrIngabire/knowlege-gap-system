@@ -6,6 +6,7 @@ import {
   FaQuestionCircle,
   FaFileAlt,
   FaHistory,
+  FaTags, // Added icon for Topics
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -32,6 +33,10 @@ export default function Sidebar() {
             </NavLink>
             <NavLink to="/lecturer/courses" className={linkClass}>
               <FaBook className="mr-3" /> Manage Courses
+            </NavLink>
+            {/* New Manage Topics Link added here */}
+            <NavLink to="/lecturer/topics" className={linkClass}>
+              <FaTags className="mr-3" /> Manage Topics
             </NavLink>
             <NavLink to="/lecturer/questions" className={linkClass}>
               <FaQuestionCircle className="mr-3" /> Questions

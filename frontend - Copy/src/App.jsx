@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import Courses from "./pages/lecturer/Courses";
 import Questions from "./pages/lecturer/Questions";
 import Resources from "./pages/lecturer/Resources";
+import Topics from "./pages/lecturer/Topics"; // <-- ADDED IMPORT
 
 import DashboardLayout from "./layouts/DashboardLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -111,6 +112,19 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        
+        {/* <-- ADDED TOPICS ROUTE HERE --> */}
+        <Route
+          path="/lecturer/topics"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Topics />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/lecturer/questions"
           element={
